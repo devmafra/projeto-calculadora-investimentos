@@ -39,18 +39,13 @@ function renderProgression(e) {
 }
 
 function clearForm() {
-  // Seleciona todos os elementos p com a classe .error-message
-  // No caso eu adicionei a todos os elementos p que contém erro a classe "error-message" para melhor controle
   const errorMessages = document.querySelectorAll("p.error-message");
-  // Seleciona todos os elementos que contém a classe .error
   const errorClassList = document.querySelectorAll(".error");
 
-  // Varre toda a lista de elementos capturados pelo querySelectorAll e aplica o .remove()
   errorMessages.forEach((msg) => msg.remove());
-  // Varre toda a lista de elementos capturados pelo querySelectorAll e remove a classe "error"
+
   errorClassList.forEach((element) => element.classList.remove("error"));
 
-  // Reseta todos os inputs do formulário
   form.reset();
 }
 

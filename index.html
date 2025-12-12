@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calculado de Investimentos Mafra</title>
+  </head>
+  <body class="grid grid-cols-3 grid-rows-2 h-dvh">
+    <aside
+      class="bg-emerald-300 row-span-full col-span-2 flex flex-col justify-between py-5 px-2"
+    >
+      <h1 class="text-2xl font-bold px-6">Calculadora de Investimentos</h1>
+      <form class="w-full">
+        <!-- Investimento inicial -->
+        <div class="flex w-full flex-col px-6 py-2">
+          <label for="starting-amount" class="font-bold text-gray-700"
+            >Investimento inicial</label
+          >
+          <div class="flex">
+            <input
+              type="text"
+              disabled
+              value="R$"
+              class="bg-emerald-200 w-1/6 text-center rounded-l-lg"
+            />
+            <input
+              type="number"
+              id="starting-amount"
+              class="bg-white w-5/6 rounded-r-lg px-2"
+              placeholder="0,00"
+              step=".01"
+            />
+          </div>
+        </div>
+        <!-- Aportes adicionais -->
+        <div class="flex w-full flex-col px-6 py-2">
+          <label for="additional-contribution" class="font-bold text-gray-700"
+            >Aportes adicionais</label
+          >
+          <div class="flex">
+            <input
+              type="text"
+              disabled
+              value="R$"
+              class="bg-emerald-200 w-1/6 text-center rounded-l-lg"
+            />
+            <input
+              type="number"
+              id="additional-contribution"
+              class="bg-white w-5/6 rounded-r-lg px-2"
+              placeholder="0,00"
+              step=".01"
+            />
+          </div>
+        </div>
+        <!-- Prazo -->
+        <div class="flex w-full flex-col px-6 py-2">
+          <label for="time-amount" class="font-bold text-gray-700">Prazo</label>
+          <div class="flex">
+            <input
+              type="number"
+              id="time-amount"
+              class="bg-white w-4/6 rounded-l-lg px-2"
+              placeholder="0"
+            />
+            <select
+              name=""
+              id="time-amount-period"
+              class="bg-white w-2/6 text-center rounded-r-lg border-l-1 border-emerald-500 hover:bg-emerald-950 hover:text-slate-200"
+            >
+              <option value="monthly">Mensal</option>
+              <option value="yearly">Anual</option>
+            </select>
+          </div>
+        </div>
+        <!-- Rentabilidade -->
+        <div class="flex w-full flex-col px-6 py-2">
+          <label for="return-rate" class="font-bold text-gray-700"
+            >Rentabilidade</label
+          >
+          <div class="flex">
+            <input
+              type="text"
+              disabled
+              value="%"
+              class="bg-emerald-200 w-1/6 text-center rounded-l-lg"
+            />
+            <input
+              type="number"
+              id="return-rate"
+              class="bg-white w-3/6 px-2"
+              placeholder="0,00"
+              step=".01"
+            />
+            <select
+              name=""
+              id="return-rate-period"
+              class="bg-white w-2/6 text-center rounded-r-lg border-l-1 border-emerald-500 hover:bg-emerald-950 hover:text-slate-200"
+            >
+              <option value="monthly">Mensal</option>
+              <option value="yearly">Anual</option>
+            </select>
+          </div>
+        </div>
+        <!-- Impostos sobre lucro -->
+        <div class="flex w-full flex-col px-6 py-2">
+          <label for="tax-rate" class="font-bold text-gray-700"
+            >Impostos sobre lucro</label
+          >
+          <div class="flex">
+            <input
+              type="text"
+              disabled
+              value="%"
+              class="bg-emerald-200 w-1/6 text-center rounded-l-lg"
+            />
+            <input
+              type="number"
+              id="tax-rate"
+              class="bg-white w-5/6 rounded-r-lg px-2"
+              placeholder="0,00"
+              step=".01"
+            />
+          </div>
+        </div>
+      </form>
+      <div class="flex h-12 px-6 my-8 w-full gap-2">
+        <button
+          class="w-1/2 rounded-lg bg-emerald-950 text-slate-200 hover:bg-emerald-800"
+        >
+          Calcular
+        </button>
+        <button
+          class="w-1/2 rounded-lg hover:bg-emerald-500 border-1 border-emerald-500"
+        >
+          Limpar
+        </button>
+      </div>
+    </aside>
+    <main class="bg-red-900 row-span-full col-span-2">
+      <p>Resultados</p>
+    </main>
+    <script type="module" src="./main.js"></script>
+  </body>
+</html>

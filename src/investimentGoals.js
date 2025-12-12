@@ -16,7 +16,9 @@ export function generateReturnsArray(
       "Investimento inicial e prazo devem ser preenchidos com valores maiores do que 0."
     );
   }
-  if (returnRate <= 0 || taxRate <= 0 || monthlyContribution <= 0) {
+  // returnRate = 10;
+  // taxRate = 10;
+  if (returnRate < 0 || taxRate < 0 || monthlyContribution < 0) {
     throw new Error(
       "Aportes adicionais, Rentabilidade e Impostos sobre lucro não podem ser menores do que 0."
     );
@@ -29,7 +31,7 @@ export function generateReturnsArray(
       : convertToMontlyReturnRate(decimalReturnRate);
 
   const finalTimeAmount =
-    timePeriod === "monthly" ? timePeriod : timePeriod * 12;
+    timePeriod === "monthly" ? timeAmount : timeAmount * 12;
 
   const finalTaxRate = taxRate / 100;
 

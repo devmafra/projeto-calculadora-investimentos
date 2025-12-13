@@ -69,6 +69,10 @@ function renderProgression(e) {
         },
       ],
     },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+    },
   });
 
   progressionChartReference = new Chart(progressionChart, {
@@ -94,6 +98,7 @@ function renderProgression(e) {
     },
     options: {
       responsive: true,
+      maintainAspectRatio: false,
       scales: {
         x: {
           stacked: true,

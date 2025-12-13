@@ -41,19 +41,24 @@ export function generateReturnsArray(
     totalInterestReturns: 0,
     month: 0,
     totalAmount: startingAmount,
-    deductedTax: 0,
+    deductedInterestReturns: 0,
+    taxValue: 0,
   };
 
   const returnsArray = [referenceInvestimentObject];
 
   for (let time = 1; time <= finalTimeAmount; time++) {
     const interestReturns =
-      returnsArray[time - 1].totalAmount * (finalReturnRate * 1 - finalTaxRate);
+      returnsArray[time - 1].totalAmount * (finalReturnRate - 1);
 
-    const totalAmount = interestReturns + monthlyContribution;
+    const totalAmount =
+      returnsArray[time - 1].totalAmount +
+      interestReturns +
+      monthlyContribution;
     const investedAmount = startingAmount + monthlyContribution * time;
     const totalInterestReturns = totalAmount - investedAmount;
-    const deductedTax = finalReturnRate * finalTaxRate;
+    const deductedInterestReturns = totalInterestReturns * 1 - finalTaxRate;
+    const taxValue = totalInterestReturns * finalTaxRate;
 
     returnsArray.push({
       investedAmount,
@@ -61,7 +66,8 @@ export function generateReturnsArray(
       totalInterestReturns,
       month: time,
       totalAmount,
-      deductedTax,
+      deductedInterestReturns,
+      taxValue,
     });
   }
   return returnsArray;

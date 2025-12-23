@@ -1,6 +1,7 @@
 import "./src/style.css";
 import { generateReturnsArray } from "./src/investimentGoals.js";
 import { Chart } from "chart.js/auto";
+import { createTable } from "./src/table.js";
 
 const form = document.getElementById("investment-form");
 const clearButton = document.getElementById("clear-button");
@@ -9,11 +10,41 @@ const progressionChart = document.getElementById("progression");
 let doughnutChartReference = {};
 let progressionChartReference = {};
 
+const columnsArray = [
+  { columnLabel: "Mês", acessor: "month" },
+  {
+    columnLabel: "Total investido",
+    acessor: "investedAmount",
+    format: (numberInfo) => formatLocaleString(numberInfo),
+  },
+  {
+    columnLabel: "Rendimento mensal",
+    acessor: "interestReturns",
+    format: (numberInfo) => formatLocaleString(numberInfo),
+  },
+  {
+    columnLabel: "Rendimento total",
+    acessor: "totalInterestReturns",
+    format: (numberInfo) => formatLocaleString(numberInfo),
+  },
+  {
+    columnLabel: "Quantia total",
+    acessor: "totalAmount",
+    format: (numberInfo) => formatLocaleString(numberInfo),
+  },
+];
+
 function formatCurrency(value) {
   return value.toFixed(2);
 }
 
+function formatLocaleString(value) {
+  return value.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+}
+
 function renderProgression(e) {
+  toggleResults();
+
   e.preventDefault();
   resetCharts();
 
@@ -47,7 +78,6 @@ function renderProgression(e) {
   );
 
   const finalInvestmentObject = returnsArray[returnsArray.length - 1];
-  console.log(finalInvestmentObject);
 
   doughnutChartReference = new Chart(finalMoneyChart, {
     type: "doughnut",
@@ -109,6 +139,8 @@ function renderProgression(e) {
       },
     },
   });
+
+  createTable(columnsArray, returnsArray, "results-table");
 }
 
 function isObjectEmpty(obj) {
@@ -134,7 +166,36 @@ function clearForm() {
   errorClassList.forEach((element) => element.classList.remove("error"));
 
   form.reset();
+
   resetCharts();
+}
+
+function clearTable() {
+  const tableElement = document.getElementById("results-table");
+  tableElement.innerHTML = "";
+}
+
+function clearResults() {
+  clearForm();
+  clearTable();
+  toggleResults();
+}
+
+function toggleResults() {
+  const resultContainer = document.getElementById("result-container");
+  const resultPlaceholder = document.getElementById("result-placeholder");
+
+  if (resultContainer.classList.contains("hidden")) {
+    resultContainer.classList.remove("hidden");
+  } else {
+    resultContainer.classList.add("hidden");
+  }
+
+  if (resultPlaceholder.classList.contains("hidden")) {
+    resultPlaceholder.classList.remove("hidden");
+  } else {
+    resultPlaceholder.classList.add("hidden");
+  }
 }
 
 function validateInput(e) {
@@ -151,7 +212,13 @@ function validateInput(e) {
   ) {
     const errorTextElement = document.createElement("p");
     errorTextElement.innerText = "Insira um valor numérico e maior que zero";
-    errorTextElement.classList.add("text-red-500", "error-message");
+    errorTextElement.classList.add(
+      "text-red-700",
+      "error-message",
+      "text-shadow-2xs",
+      "text-shadow-slate-300",
+      "font-semibold"
+    );
 
     parentElement.classList.add("error");
     grandParentElement.appendChild(errorTextElement);
@@ -171,5 +238,22 @@ for (const formElement of form) {
   }
 }
 
-// form.addEventListener("submit", renderProgression);
-clearButton.addEventListener("click", clearForm);
+const mainElement = document.querySelector("main");
+const carouselElement = document.getElementById("carousel-container");
+const previousButton = document.getElementById("slide-arrow-previous");
+const nextButton = document.getElementById("slide-arrow-next");
+
+nextButton.addEventListener("click", () => {
+  carouselElement.scrollLeft += mainElement.clientWidth;
+  nextButton.classList.add("hidden");
+  previousButton.classList.remove("hidden");
+});
+
+previousButton.addEventListener("click", () => {
+  carouselElement.scrollLeft -= mainElement.clientWidth;
+  nextButton.classList.remove("hidden");
+  previousButton.classList.add("hidden");
+});
+
+form.addEventListener("submit", renderProgression);
+clearButton.addEventListener("click", clearResults);

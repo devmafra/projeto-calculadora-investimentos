@@ -7,3 +7,9 @@
     @apply rounded-lg;
   }
 }
+
+@utility scrollbar-hidden {
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}

@@ -43,7 +43,8 @@ function formatLocaleString(value) {
 }
 
 function renderProgression(e) {
-  toggleResults();
+  toggleResults("show");
+  scroll("reset");
 
   e.preventDefault();
   resetCharts();
@@ -178,23 +179,43 @@ function clearTable() {
 function clearResults() {
   clearForm();
   clearTable();
-  toggleResults();
+  toggleResults("hide");
 }
 
-function toggleResults() {
+function scroll(direction) {
+  const mainElement = document.querySelector("main");
+  const carouselElement = document.getElementById("carousel-container");
+  const previousButton = document.getElementById("slide-arrow-previous");
+  const nextButton = document.getElementById("slide-arrow-next");
+
+  if (direction === "right") {
+    carouselElement.scrollLeft += mainElement.clientWidth;
+    nextButton.classList.add("hidden");
+    previousButton.classList.remove("hidden");
+  } else if (direction === "left") {
+    carouselElement.scrollLeft -= mainElement.clientWidth;
+    nextButton.classList.remove("hidden");
+    previousButton.classList.add("hidden");
+  } else if (direction === "reset") {
+    carouselElement.scrollLeft -= 999999;
+    nextButton.classList.remove("hidden");
+    previousButton.classList.add("hidden");
+  }
+}
+
+function toggleResults(att) {
   const resultContainer = document.getElementById("result-container");
   const resultPlaceholder = document.getElementById("result-placeholder");
 
-  if (resultContainer.classList.contains("hidden")) {
+  if (att === "show") {
     resultContainer.classList.remove("hidden");
-  } else {
+    resultPlaceholder.classList.add("hidden");
+  } else if (att === "hide") {
     resultContainer.classList.add("hidden");
-  }
-
-  if (resultPlaceholder.classList.contains("hidden")) {
     resultPlaceholder.classList.remove("hidden");
   } else {
-    resultPlaceholder.classList.add("hidden");
+    resultContainer.classList.toggle("hidden");
+    resultPlaceholder.classList.toggle("hidden");
   }
 }
 
@@ -244,15 +265,11 @@ const previousButton = document.getElementById("slide-arrow-previous");
 const nextButton = document.getElementById("slide-arrow-next");
 
 nextButton.addEventListener("click", () => {
-  carouselElement.scrollLeft += mainElement.clientWidth;
-  nextButton.classList.add("hidden");
-  previousButton.classList.remove("hidden");
+  scroll("right");
 });
 
 previousButton.addEventListener("click", () => {
-  carouselElement.scrollLeft -= mainElement.clientWidth;
-  nextButton.classList.remove("hidden");
-  previousButton.classList.add("hidden");
+  scroll("left");
 });
 
 form.addEventListener("submit", renderProgression);

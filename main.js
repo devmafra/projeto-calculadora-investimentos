@@ -44,6 +44,7 @@ function formatLocaleString(value) {
 
 function renderProgression(e) {
   toggleResults("show");
+  clearTable();
   scroll("reset");
 
   e.preventDefault();
